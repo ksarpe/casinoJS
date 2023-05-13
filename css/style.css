@@ -15,6 +15,10 @@ div{
     /* border: 1px solid red; */
 }
 
+button {
+    margin: 20px auto;
+}
+
 .reel {
     display: flex;
     justify-content: center;
@@ -22,7 +26,7 @@ div{
     width: 150px;
     height: 150px;
     font-size: 65px;
-    /* background-color: var(--primary-color); */
+    background-color: var(--primary-color);
     border-radius: 5px;
 }
 
@@ -33,7 +37,9 @@ div{
     margin: 50px auto 0;
     border: 1px solid red;
     overflow: hidden;
-    background-image: url("/images/photo1.jpg");
+    /* background-image: url("/images/photo1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat; */
 } 
 .reel-row {
     display: flex;
@@ -49,6 +55,12 @@ div{
     text-align: center;
 }
 
-button {
-    margin: 20px auto;
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.blink {
+    animation: blink 1s linear infinite;
 }
