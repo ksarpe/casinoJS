@@ -1,12 +1,12 @@
 // export functions
-import {removeBlinking, setReelColor} from './helpers.js';
+import {removeEffects, setReelColor} from './helpers.js';
 import {showWin} from './process_win.js';
 // export consts
 import {winningLines, reelsAmount, reels, initialSpins, animeDuration, reelHeight, symbols, initializeReels} from './config.js';
 
 //initialize reels to not be empty
 window.addEventListener('load', initializeReels);
-
+ 
 let spinButton = document.getElementById('spin-button');
 spinButton.addEventListener('click', function() {
     //if user clicks during spinning and there are some spins remaining
@@ -14,7 +14,7 @@ spinButton.addEventListener('click', function() {
     //if user clicks when spinning is under finalizing
     else if (spinning){return;}
     //if user clicks and spin is available
-    else{spinReels();removeBlinking();spinning = true;}});
+    else{spinReels();removeEffects();spinning = true;}});
 
 let spinsRemaining = initialSpins;
 let spinning = false;
@@ -64,11 +64,10 @@ function spinReels() {
                 if(reels.count == 4)
                 {reels.pop();}
 
-                processWin();
-                
+                processWin(); 
                 setTimeout(function() {
                     reset();
-                }, 500);
+                }, 200);                             
             }
         }
     });
@@ -86,18 +85,24 @@ function processWin(){
 function checkSymbols(symbols) {
     let firstSymbol = symbols[0].symbol;
     let count = 0;
+    let multiplier = 1;
 
     // iterate over the symbols
     for(let i = 0; i < symbols.length; i++) {
         // count until the symbol is different
-        if(symbols[i].symbol === firstSymbol) {
+        if(symbols[i].symbol === firstSymbol || symbols[i].symbol === 'X2' || symbols[i].symbol === 'X3') {
+            if(symbols[i].symbol === 'X2') {
+                multiplier *= 2;
+            } else if(symbols[i].symbol === 'X3') {
+                multiplier *= 3;
+            }
             count++;
         } else {
             break;
         }
     }
 
-    return count;
+    return {count, multiplier};
 }
 
 function checkLines() {
@@ -106,15 +111,13 @@ function checkLines() {
     // Check each winning line
     for (let line of winningLines) {
         let symbols = line.map(([i, j]) => reels[i][j]);  // Get the symbols for this line
-        console.log("CheckLines(): ", symbols);
         
-        let count = checkSymbols(symbols);
+        let {count, multiplier} = checkSymbols(symbols);
         // If there are three or more of the same symbol, add this line to the result
         if (count >= 3) {
-            result.push({line: line.slice(0, count), count: count, symbol: symbols[0].symbol});
-            // push e.x -> line : [[0,0], [0,1], [0,2]], count : 3, symbol : 'A'
+            result.push({line: line.slice(0, count), count: count, symbol: symbols[0].symbol, multiplier: multiplier});
+            // push e.x -> line : [[0,0], [0,1], [0,2]], count : 3, symbol : 'A', multiplier : 2 (1x X2)
         }
     }
-    console.log("CheckLines(): ", result);
     return result;
 }

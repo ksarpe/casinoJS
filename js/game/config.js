@@ -15,11 +15,11 @@ export const winningLines = [
 export const symbols = [
     { symbol: 'X2' },
     { symbol: 'A' }, { symbol: 'A' },
-    { symbol: 'K' }, { symbol: 'K' }, { symbol: 'K' },
-    { symbol: 'Q' }, { symbol: 'Q' }, { symbol: 'Q' },
-    { symbol: 'J' }, { symbol: 'J' }, { symbol: 'J' },
-    { symbol: 'T' }, { symbol: 'T' }, { symbol: 'T' }, { symbol: 'T' },
-    { symbol: '9' }, { symbol: '9' }, { symbol: '9' }, { symbol: '9' }  
+    // { symbol: 'K' }, { symbol: 'K' }, { symbol: 'K' },
+    // { symbol: 'Q' }, { symbol: 'Q' }, { symbol: 'Q' },
+    // { symbol: 'J' }, { symbol: 'J' }, { symbol: 'J' },
+    // { symbol: '10' }, { symbol: '10' }, { symbol: '10' }, { symbol: '10' },
+    // { symbol: '9' }, { symbol: '9' }, { symbol: '9' }, { symbol: '9' }  
 ];
 export const reelHeight = 150; //px
 
@@ -33,22 +33,20 @@ export const animeDuration = 80; //ms
 export function initializeReels() {
     // Loop through each row in the reels
     const initialSymbols = ['J', 'X2', 'A', 'K'];
-    const newReels = reels;
+    const newReels = Array(rowsAmount).fill('-'.repeat(reelsAmount));
 
     for(let i = 0; i < newReels.length + 1; i++) {
-        //if(i === 4) break;
+        if(i === 4) break;
         // Generate a new array of random symbols
         const newSymbols = Array(reelsAmount).fill({ symbol: initialSymbols[i] });
-        console.log(newSymbols);
         newReels[i] = newSymbols;
         if(i === 4) break;
 
         // Update the reel elements
         for(let j = 0; j < reelsAmount; j++) {
-            console.log(i,j);
             const reelId = `reel${i * reelsAmount + j + 1}`;
             const reelElement = document.getElementById(reelId);
-            reelElement.innerText = reels[i][j].symbol;
+            reelElement.innerText = newReels[i][j].symbol;
 
             // Call setReelColor here to color the reel
             setReelColor(reelElement, newReels[i][j].symbol);

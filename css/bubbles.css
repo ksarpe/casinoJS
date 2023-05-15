@@ -5,6 +5,7 @@
     border: 1px solid red;
     overflow: hidden;
     background-color: rgb(147, 243, 246);
+    text-align: center;
 }
 
 .bubbles{

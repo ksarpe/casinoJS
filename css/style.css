@@ -3,6 +3,7 @@
     --primary-color-alpha : #33333349;
     --width: 700px;
     --height: 450px;
+    --diagonal: calc(var(--width)/5 * 0.740);
 }
 
 body {
@@ -25,15 +26,91 @@ button {
     align-items: center;
     width: calc(var(--width) / 5);
     height: calc(var(--height) / 3);
-    font-size: 80px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 70px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-shadow: 0 0 10px black;
 }
+
+.reel.highlight-horizontal-left::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 50%;
+    top: 50%;
+    border-top: 2px solid red;
+    z-index: 10;
+}
+.reel.highlight-horizontal-right::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width:50%;
+    top: 50%;
+    border-top: 2px solid red;
+    z-index: 10;
+}
+
+.reel.highlight-diagonal-topleft::after {
+    content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--diagonal);
+  border-right: 2px solid transparent;
+  border-top: 2px solid red;
+  transform: rotate(-134deg);
+  transform-origin: left;
+  z-index: 10;
+}
+
+/*class for showing line from the middle of the .reel, to the top corner */
+.reel.highlight-diagonal-topright::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--diagonal);
+  border-right: 2px solid transparent;
+  border-top: 2px solid red;
+  transform: rotate(-48deg);
+  transform-origin: left;
+  z-index: 10;
+}
+
+
+.reel.highlight-diagonal-bottomleft::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--diagonal);
+    border-right: 2px solid transparent;
+    border-top: 2px solid red;
+    transform: rotate(135deg);
+    transform-origin: left;
+    z-index: 10;
+}
+
+.reel.highlight-diagonal-bottomright::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--diagonal);
+    border-right: 2px solid transparent;
+    border-top: 2px solid red;
+    transform: rotate(48deg);
+    transform-origin: left;
+    z-index: 10;
+}
+
+
 
 .reels{
     position: relative;
     width: var(--width);
     height: var(--height);
-    margin: 60px auto 15px;
+    margin: 5px auto 15px;
     overflow: hidden;
     background-image: url("/images/slot-bg.jpg");
 } 
@@ -50,5 +127,10 @@ button {
 .bottom-panel{
     text-align: center;
     background-color: var(--primary-color-alpha);
+}
+.title{
+    margin-top: 0px;
+    font-size: 50px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
